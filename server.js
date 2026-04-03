@@ -57,7 +57,6 @@ app.use(morgan("dev"));
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Jika request tanpa origin (mis. curl/postman), izinkan.
       if (!origin) return callback(null, true);
       if (CORS_ORIGINS.has(origin)) return callback(null, true);
       return callback(null, false);
@@ -75,7 +74,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      sameSite: "none",
+      sameSite: "lax",
       secure: process.env.COOKIE_SECURE === "true",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     },
